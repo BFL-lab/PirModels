@@ -21,6 +21,7 @@ size                    single  int4                Lenght of ORF
 seq                     single  string              The aa sequence of ORF
 firstAA                 single  string              First amino acid
 possible_start          array   string              List of possible start
+similar_prot            single  string              Name protein that match with BLAST
 
 - EndFieldsTable
 
