@@ -22,7 +22,7 @@ seq                     single  string              The aa sequence of ORF
 firstAA                 single  string              First amino acid
 possible_start          array   string              List of possible start
 similar_prot            single  string              Name protein that match with BLAST
-firstATG                single  int4                Position of the first ATG
+notes                   array   string              An array of not that should be added on the startline
 
 - EndFieldsTable
 
