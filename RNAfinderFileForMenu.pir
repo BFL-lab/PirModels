@@ -24,10 +24,10 @@
 - InheritsFrom	PirObject
 - FieldsTable
 
-# Field name    		Sing/Array/Hash	Type		    Comments
-#---------------------- ---------------	---------------	-----------------------
-filename                single          string          optional
-List           	        array	        <MenuList>      Menu list
+# Field name    		Sing/Array/Hash	Type		        Comments
+#---------------------- ---------------	---------------	    -----------------------
+filename                single          string              optional
+List           	        array	        <RNAfinderMenuList> Menu list
 
 - EndFieldsTable
 - Methods
@@ -65,7 +65,7 @@ sub ImportFromTextFile {
     my @file = <$fh>;
     $fh->close();
 
-    my $MenuList = {};
+    my $RNAfinderMenuList = {};
     my $count_line = 0;
     while (@file) {
         my $line = shift(@file);
@@ -78,7 +78,7 @@ sub ImportFromTextFile {
         my $name = $1;  # potentially a list, like "abc,def"
         $name =~ s/\s+//;
         die "Error: genename '$name' line '$count_line' seen more than once in file '$filename'.\n"
-            if exists $MenuList->{lc($name)};
+            if exists $RNAfinderMenuList->{lc($name)};
 
         # Expects "comment"
         while (@file && $file[0] =~ m/^\s*$|^\s*#/){
@@ -113,7 +113,7 @@ sub ImportFromTextFile {
         shift(@file);
         $count_line++;
 
-        my $List = new PirObject::MenuList(
+        my $List = new PirObject::RNAfinderMenuList(
             Set      => {},
             OriName  => $name,
             Comment  => $ModelComment,
@@ -136,8 +136,8 @@ sub ImportFromTextFile {
             $count_line++;
 
             $Item_counter++;
-            my $autorized_fields = ["erpin_arg","model_file","label","pos_ac","comment","module","cutoff","gap_to_end","comment_for_MFa","to_comment"];
-            my $Item = new PirObject::Item();
+            my $autorized_fields = ["erpin_arg","model_file","label","pos_ac","comment","module","cutoff","gap_to_end","comment_for_MFa","to_comment","at_cutoff","evalue_cutoff"];
+            my $Item = new PirObject::RNAfinderItem();
             while (@file && $file[0] !~ m/^\s*EndItem\s*$/i) {
                 my $line_b = shift(@file);
                 $count_line++;
@@ -161,6 +161,8 @@ sub ImportFromTextFile {
                 $Item->set_gaptoend($value)       if $field eq "gap_to_end";
                 $Item->set_commentForMFa($value)  if $field eq "comment_for_MFa";
                 $Item->set_toComment($value)      if $field eq "to_comment";
+                $Item->set_atCutoff($value)       if $field eq "at_cutoff";
+                $Item->set_evalueCutoff($value)   if $field eq "evalue_cutoff";
             }
             unshift(@file,"(EOF)\n") unless @file; # for error message
             my $endcomkeyword = shift(@file);
@@ -173,9 +175,9 @@ sub ImportFromTextFile {
             die "Item$Item_counter for block '$name' haven't comment, line '$count_line'.\n"         if !($Item->get_comment());
             $ItemSet->{$Item_counter} = $Item;
         }
-        $MenuList->{lc($name)} = $List;
+        $RNAfinderMenuList->{lc($name)} = $List;
     }
-    $self->set_List($MenuList);
+    $self->set_List($RNAfinderMenuList);
     $self;
 }
 

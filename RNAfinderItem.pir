@@ -3,7 +3,7 @@
 # This class contain hash of Item List for each RNA model
 #
 
-- PerlClass	PirObject::Item
+- PerlClass	PirObject::RNAfinderItem
 - InheritsFrom	PirObject
 - FieldsTable
 
@@ -26,3 +26,5 @@ time                    single          string          time for run erpin
 gaptoend                single          string          list of elements where gaps must be placed at the end
 commentForMFa           single          string          comment for MFannot
 toComment               single          int4            if startline need to be in comment in Masterfile
+evalueCutoff            single          string          evalue cutoff for erpin
+atCutoff                single          int4            at content cutoff for erpin

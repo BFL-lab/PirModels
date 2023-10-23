@@ -3,10 +3,10 @@
 # This class contain hash of Item List for each RNA model
 #
 
-- PerlClass	PirObject::ItemSet
+- PerlClass	PirObject::RNAfinderItemSet
 - InheritsFrom	PirObject
 - FieldsTable
 
 # Field name    		Sing/Array/Hash	Type		    Comments
 #---------------------- ---------------	---------------	-----------------------
-Itemset                 hash            <Item>          Represent item for each block of Item
+Itemset                 hash            <RNAfinderItem> Represent item for each block of Item
